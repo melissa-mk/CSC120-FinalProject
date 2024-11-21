@@ -1,16 +1,14 @@
 ## Front-End Design (10 pts)
 
-Contact book (could use sorting and linked lists for “previous” and “next” features)
-
 _____ 1 pt: User can create contacts correctly and input will have to meet constraints to be validated.
 
 _____ 1 pt: User can update contacts correctly and input will have to meet constraints to be validated.
 
-_____ 1 pt: User can view all contacts.
+_____ 1 pt: User can view all contacts in order based on a specific attribute.
 
 _____ 1 pt: User can choose to view a particular contact.
 
-_____ 1 pt: User can delete a particular contact 
+_____ 1 pt: User can delete a particular contact.
 
 _____ 1 pt: User can clear the contact book, if desired.
 
@@ -32,7 +30,8 @@ _____ 2 pts: The project's design is **extensible** (i.e. someone else could pic
 
 _____ 2 pts: Submission includes an **architecture diagram** describing the relationships between all classes.
 
-## General Items (10 pts):
+## General Items (10 pts)
+
 _____ 4 pts: Program compiles without errors or warnings.
 
 _____ 2 pts: Executes fully & consistently without crashing (exception/freeze).
