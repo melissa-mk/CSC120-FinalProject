@@ -1,10 +1,10 @@
-# CSC120-FinalProject: Promises, Promises...
+# CSC120-FinalProject
 
-The task for this assignment is straightforward: create a class that `implement`s the `interface` contained in `Contract.java`... and does something interesting!
+For my final project, I will be developing a contact book app.
 
-Pay attention to the method names, and remember that your program should adhere to Java conventions (so each method's behavior should make sense with respect to what its name implies). And don't forget to include Javadoc comments for each method and class attribute!
+The app can:
 
-**That's it.** The rest is up to you. Have fun! :-)
+**That's it. :-)**
 
 Contact book (create, read, update, delete contacts. Use regex for input validation; could use sorting and linked lists for “previous” and “next” features)
 doubly linked list for previous and next
