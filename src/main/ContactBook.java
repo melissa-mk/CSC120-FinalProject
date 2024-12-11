@@ -48,6 +48,29 @@ public class ContactBook {
     }
 
     /**
+     * Parses a line from the contacts.txt file into a Contact object
+     * @param line The line of contact info
+     * @return a Contact object or null if the line is invalid
+     */
+    private Contact parseContactFromLine(String line) {
+        String[] parts = line.split(" ");
+        if (parts.length >= 5) { // Ensure the line has all required fields
+            String fName = parts[0];
+            String lName = parts[1];
+            String phone = parts[2];
+            String email = parts[3];
+            String[] dateParts = parts[4].split("-");
+            LocalDate dob = LocalDate.of(
+                    Integer.parseInt(dateParts[0]),
+                    Integer.parseInt(dateParts[1]),
+                    Integer.parseInt(dateParts[2])
+            );
+            return new Contact(fName, lName, phone, email, dob);
+        }
+        return null;
+    }
+
+    /**
      * traverses the contact book (contacts.txt)
      * looking for a contact with a search parameter input by the user
      */
@@ -79,58 +102,36 @@ public class ContactBook {
     }
 
     /**
-     * would print the information of all contacts, if any, in the order of their creation
-     *
+     * Reads all contacts from the contacts.txt file into an ArrayList.
+     * @return A list of Contact objects.
      */
-    @Deprecated
-    public void viewAll(){
+    private ArrayList<Contact> readAllContacts() {
+        ArrayList<Contact> contactList = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("contacts.txt"))) {
-            String line = reader.readLine();
-            if (line == null) {
-                System.out.println("You're lonely bro 👀");
-            } else {
-                while (line != null) {
-                    System.out.println(line); // current line
-                    line = reader.readLine(); // next line
+            String line= reader.readLine();
+            while (line != null) {
+                Contact contact = parseContactFromLine(line);
+                if (contact != null) {
+                    contactList.add(contact);
                 }
+                line= reader.readLine();
             }
         } catch (IOException e) {
-            System.err.println("An error occurred: " + e.getMessage());
+            System.err.println("Couldn't read contacts: " + e.getMessage());
         }
+        return contactList;
     }
 
     /**
      * updates contacts.txt with contacts sorted by last name then by first name
      * and prints the information of all contacts, if any
      */
-    public void viewAllSorted(){
-        ArrayList<Contact> contactList = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("contacts.txt"))) {
-            String line= reader.readLine();
-            while (line != null) {
-                String[] parts = line.split(" ");
-                if (parts.length >= 5) { // Ensure the line has all required fields
-                    String fName = parts[0];
-                    String lName = parts[1];
-                    String phone = parts[2];
-                    String email = parts[3];
-                    String[] dateParts = parts[4].split("-");
-                    LocalDate dob = LocalDate.of(
-                            Integer.parseInt(dateParts[0]),
-                            Integer.parseInt(dateParts[1]),
-                            Integer.parseInt(dateParts[2])
-                    );
-                    contactList.add(new Contact(fName, lName, phone, email, dob));
-                    line= reader.readLine();
-                }
-            }
-            Collections.sort(contactList);
-            contacts = contactList;
-            for(Contact c:contactList){
-                System.out.println(c.toString());
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
+    public void viewAllSorted() {
+        ArrayList<Contact> contactList = readAllContacts();
+        Collections.sort(contactList);
+        contacts = contactList;
+        for (Contact c : contactList) {
+            System.out.println(c);
         }
     }
 
@@ -220,6 +221,7 @@ public class ContactBook {
         String lastName = s.nextLine();
 
         try {
+
             // Read all contacts from the file into an arraylist
             ArrayList<Contact> contactList = new ArrayList<>();
             try (BufferedReader reader = new BufferedReader(new FileReader("contacts.txt"))) {
@@ -378,7 +380,7 @@ public class ContactBook {
         Scanner s= new Scanner(System.in);
         String choice= s.nextLine();
         if(choice.equalsIgnoreCase("y")){
-                try (FileOutputStream fos = new FileOutputStream("contacts.txt")) { // reinitializes and clears the file
+                try (FileOutputStream fos = new FileOutputStream("contacts.txt")) { // reinitialized and clears the file
                 System.out.println("Fresh start!");
             } catch (IOException e) {
                     throw new RuntimeException(e);}
@@ -388,7 +390,7 @@ public class ContactBook {
     }
 
     /**
-     * developer's entrypoint to test validator class
+     * user's entrypoint
      * @param args array of string arguments
      */
     public static void main(String[] args){
