@@ -2,7 +2,7 @@
 
 For my final project for CSC120, I will be developing a contact book app.
 
-The app allows a user to:
+The terminal-based app allows a user to:
 - create a contact
 - search for a contact
 - view all contacts sorted by last name (A-Z)
