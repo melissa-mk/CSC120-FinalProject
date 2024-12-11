@@ -3,26 +3,29 @@ package main;
 import java.time.LocalDate;
 import utils.InputValidator;
 
-public class Contact {
+public class Contact implements Comparable<Contact> {
     InputValidator iv = new InputValidator();
-    private String firstName;
-    private String lastName; // most common sort attribute cc Nina
-    private String phone;
-    private String email;
-    private LocalDate dateOfBirth;
+    String firstName;
+    String lastName; // most common sort attribute cc Nina
+    String phone;
+    String email;
+    LocalDate dateOfBirth;
+    Contact prev=null;
+    Contact next=null;
+
     /**
      * Constructor
-     * @param firstName
-     * @param lastName
-     * @param phone
-     * @param email
-     * @param dateOfBirth
+     * @param firstName contact's first name
+     * @param lastName contact's last name
+     * @param phone contact's phone number with no special characters
+     * @param email contact's email address
+     * @param dateOfBirth contact's date of birth
      */
     public Contact(String firstName, String lastName, String phone, String email, LocalDate dateOfBirth) {
         if(iv.isNameValid(firstName)){
             this.firstName = firstName;
         }else{
-            System.out.println("First name is invalid");
+            System.out.println("Invalid first name");
         }
         if(iv.isNameValid(lastName)){
             this.lastName = lastName;
@@ -47,27 +50,30 @@ public class Contact {
     }
 
     /**
-     * constructor
-     * @param firstName
-     * @param lastName
-     * @param phone
-     * @param email
+     * Constructor
+     * @param firstName contact's first name
+     * @param lastName contact's last name
+     * @param phone contact's phone number with no special characters
+     * @param email contact's email address
      */
     public Contact(String firstName, String lastName, String phone, String email) {
         if(iv.isNameValid(firstName)){
             this.firstName = firstName;
         }else{
             System.out.println("First name is invalid");
+            return;
         }
         if(iv.isNameValid(lastName)){
             this.lastName = lastName;
         }else{
             System.out.println("Last name is invalid");
+            return;
         }
         if(iv.isPhoneValid(phone)) {
             this.phone = phone;
         }else{
             System.out.println("Phone number is invalid");
+            return;
         }
         if(iv.isEmailValid(email)){
             this.email = email;
@@ -77,10 +83,10 @@ public class Contact {
     }
 
     /**
-     * constructor
-     * @param firstName
-     * @param lastName
-     * @param email
+     * Constructor
+     * @param firstName contact's first name
+     * @param lastName contact's last name
+     * @param email contact's email address
      */
     public Contact(String firstName, String lastName, String email) {
         if(iv.isNameValid(firstName)){
@@ -100,30 +106,6 @@ public class Contact {
         }
     }
 
-//    /**
-//     * constructor
-//     * @param firstName
-//     * @param lastName
-//     * @param phone
-//     */
-//    public Contact(String firstName, String lastName, String phone) {
-//        if(iv.isNameValid(firstName)){
-//            this.firstName = firstName;
-//        }else{
-//            System.out.println("First name is invalid");
-//        }
-//        if(iv.isNameValid(lastName)){
-//            this.lastName = lastName;
-//        }else{
-//            System.out.println("Last name is invalid");
-//        }
-//        if(iv.isPhoneValid(phone)) {
-//            this.phone = phone;
-//        }else{
-//            System.out.println("Phone number is invalid");
-//        }
-//    }
-
     /**
      * getter
      * @return the contact's date of birth
@@ -134,7 +116,7 @@ public class Contact {
 
     /**
      * setter
-     * @param dateOfBirth
+     * @param dateOfBirth contact's date of birth
      */
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
@@ -150,7 +132,7 @@ public class Contact {
 
     /**
      * setter
-     * @param email
+     * @param email contact's email address
      */
     public void setEmail(String email) {
         this.email = email;
@@ -166,7 +148,7 @@ public class Contact {
 
     /**
      * setter
-     * @param phone
+     * @param phone contact's phone number
      */
     public void setPhone(String phone) {
         this.phone = phone;
@@ -182,7 +164,7 @@ public class Contact {
 
     /**
      * setter
-     * @param lastName
+     * @param lastName contact's last name
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
@@ -198,15 +180,31 @@ public class Contact {
 
     /**
      * setter
-     * @param firstName
+     * @param firstName contact's first name
      */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public Contact deleteContact(Contact c){
-        c=null;
-        return c;
+    /**
+     * Returns a string representation of the contact.
+     * @return a string of all attributes of the contact
+     */
+    @Override
+    public String toString() {
+       return firstName+" "+lastName+" "+phone+" "+email+" "+dateOfBirth;
     }
 
+    /**
+     * @param o the object to be compared.
+     * @return
+     */
+    @Override
+    public int compareTo(Contact o) {
+        if(!this.lastName.equalsIgnoreCase(o.lastName)) {
+            return this.lastName.compareToIgnoreCase(o.lastName);
+        }else {
+            return this.firstName.compareToIgnoreCase(o.firstName);
+        }
+    }
 }

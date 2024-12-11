@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class InputValidator {
     /**
      * verifies that the name is between 1 and 50 characters
-     * @param name
+     * @param name contact's first name
      * @return true if the name is a valid string, false otherwise
      */
     public boolean isNameValid(String name){
@@ -15,21 +15,21 @@ public class InputValidator {
 
     /**
      *
-     * @param date
+     * @param date contact's date of birth
      * @return true if the date is valid (past but not too far in the past), false otherwise
      */
      public boolean isDateValid(LocalDate date) {
-            // Define the valid range
-            LocalDate earliest = LocalDate.of(1930, 1, 1); // "Too far in the past" threshold
-            LocalDate latest = LocalDate.now();           // Current date
+         // Define the valid range
+         LocalDate earliest = LocalDate.of(1930, 1, 1); // "Too far in the past" threshold
+         LocalDate latest = LocalDate.now();           // Current date
 
-            // Check if the date is within the valid range
-            return !date.isBefore(earliest) && !date.isAfter(latest);
+         // Check if the date is within the valid range
+         return !date.isBefore(earliest) && !date.isAfter(latest);
      }
 
     /**
      * uses regular expressions to validate character in email address
-     * @param email
+     * @param email contact's email address
      * @return true if the email is valid, false otherwise
      */
     public boolean isEmailValid(String email){
@@ -39,7 +39,7 @@ public class InputValidator {
 
     /**
      * verifies if the input string for phone is made of only numbers
-     * @param phone
+     * @param phone contact's phone number
      * @return true if input string has only digits, false otherwise
      */
     public boolean isDigitsOnly(String phone) {
@@ -56,7 +56,7 @@ public class InputValidator {
 
     /**
      * verifies if the input string is made of only 10-15 numbers
-     * @param phone
+     * @param phone contact's phone number
      * @return true if the phone number is valid in terms of length, false otherwise
      */
     // a standard phone number will be 10-15 digits long
@@ -66,5 +66,17 @@ public class InputValidator {
         }else{
             return false;
         }
+    }
+
+    /**
+     * developer's entrypoint to test validator class
+     * @param args array of string arguments
+     */
+    public static void main(String[] args) {
+        InputValidator iv = new InputValidator();
+        iv.isNameValid(""); // must return false
+        iv.isDateValid(LocalDate.of(2025,1,1)); // must return false
+        iv.isEmailValid("mma"); // must return false
+        iv.isPhoneValid("1234567"); // must return false
     }
 }
