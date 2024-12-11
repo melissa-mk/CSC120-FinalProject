@@ -79,8 +79,10 @@ public class ContactBook {
     }
 
     /**
-     * prints the information of all contacts, if any
+     * would print the information of all contacts, if any, in the order of their creation
+     *
      */
+    @Deprecated
     public void viewAll(){
         try (BufferedReader reader = new BufferedReader(new FileReader("contacts.txt"))) {
             String line = reader.readLine();
@@ -123,6 +125,7 @@ public class ContactBook {
                 }
             }
             Collections.sort(contactList);
+            contacts = contactList;
             for(Contact c:contactList){
                 System.out.println(c.toString());
             }
@@ -132,21 +135,57 @@ public class ContactBook {
     }
 
     /**
-     * goes to the next contact in the contact book
-     * @param c
-     * @return
+     * goes to the previous contact in the contact book.
      */
-    public static Contact nextContact(Contact c) {
-        return c;
+    public void previousContact() {
+        if (contacts == null || contacts.isEmpty()) {
+            System.out.println("You're lonely bro 👀");
+            return;
+        }
+        if (current == null) {
+            current = contacts.get(contacts.size() - 1); // Start with the last contact by default
+            System.out.println("Previous contact: \n" + current);
+            return;
+        }
+
+        int currentIndex = contacts.indexOf(current);
+        if (currentIndex == -1) {
+            System.out.println("Delusional much?");
+            return;
+        }
+        if (currentIndex == 0) {
+            System.out.println("This is your first contact.\n"+contacts.get(0));
+            return;
+        }
+        current = contacts.get(currentIndex - 1); // Update to the previous contact
+        System.out.println("Previous contact: \n" + current);
     }
 
     /**
-     * goes to the previous contact in the contact book
-     * @param c
-     * @return
+     * goes to the next contact in the contact book.
      */
-    public static Contact previousContact(Contact c) {
-        return c;
+    public void nextContact() {
+        if (contacts == null || contacts.isEmpty()) {
+            System.out.println("You're lonely bro 👀");
+            return;
+        }
+        if (current == null) {
+            current = contacts.get(0); // Start with the first contact by default
+            System.out.println("Next contact: \n" + current);
+            return;
+        }
+
+        int currentIndex = contacts.indexOf(current);
+        if (currentIndex == -1) {
+            System.out.println("Current contact is not in the contact book.");
+            return;
+        }
+        if (currentIndex == contacts.size() - 1) {
+            System.out.println("This is your last contact.\n"+contacts.get(contacts.size() - 1));
+            return;
+        }
+        current = contacts.get(currentIndex + 1); // Update to the next contact
+        System.out.println("Next contact: \n" + current);
     }
 
     /**
@@ -326,7 +365,7 @@ public class ContactBook {
             }
             System.out.println("Contact deleted successfully.");
         } catch (IOException e) {
-            System.err.println("An error occurred while writing to the file: " + e.getMessage());
+            System.err.println("Error while writing to file: " + e.getMessage());
         }
     }
 
@@ -357,7 +396,7 @@ public class ContactBook {
         Scanner s= new Scanner(System.in);
         int choice;
         do {
-            System.out.println("\n-------Contacts App-------\nWhat do you want to do?\n1. Create a contact\n2. View all your contacts sorted by last name\n3. Search your contacts\n4. Edit a contact\n5. Delete a contact\n6. Clear contact book\n7. Exit");
+            System.out.println("\n-------Contacts App-------\nWhat do you want to do?\n1. Create a contact\n2. View all your contacts sorted by last name\n3. Search your contacts\n4. Previous Contact\n5. Next Contact\n6. Edit a contact\n7. Delete a contact\n8. Clear contact book\n9. Exit");
             choice=s.nextInt();
             if(choice!= Integer.parseInt(String.valueOf(choice))){
                 System.out.println("Invalid choice. Please try again.\n");
@@ -378,20 +417,26 @@ public class ContactBook {
                         my.search();
                         break;
                     case 4:
-                        my.updateContact();
+                        my.previousContact();
                         break;
                     case 5:
-                        my.deleteContact();
+                        my.nextContact();
                         break;
                     case 6:
-                        my.clear();
+                        my.updateContact();
                         break;
                     case 7:
+                        my.deleteContact();
+                        break;
+                    case 8:
+                        my.clear();
+                        break;
+                    case 9:
                         System.exit(0);
                     default:
                         return;
                 }
             }
-        }while(choice!=7);
+        }while(choice!=9);
     }
 }

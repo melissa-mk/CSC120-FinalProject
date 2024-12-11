@@ -1,6 +1,7 @@
 package main;
 
 import java.time.LocalDate;
+
 import utils.InputValidator;
 
 public class Contact implements Comparable<Contact> {
@@ -10,8 +11,6 @@ public class Contact implements Comparable<Contact> {
     String phone;
     String email;
     LocalDate dateOfBirth;
-    Contact prev=null;
-    Contact next=null;
 
     /**
      * Constructor

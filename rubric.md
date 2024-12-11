@@ -4,7 +4,7 @@ _YES_ 1 pt: User can create contacts correctly and input will have to meet const
 
 _YES_ 1 pt: User can update contacts correctly and input will have to meet constraints to be validated.
 
-_____ 1 pt: User can view all contacts in order based on a specific attribute.
+_YES_ 1 pt: User can view all contacts in order based on a specific attribute (last name). 
 
 _YES_ 1 pt: User can view a particular contact.
 
@@ -12,9 +12,9 @@ _YES_ 1 pt: User can delete a particular contact.
 
 _YES_ 1 pt: User can clear the contact book, if desired.
 
-_____ 1 pt: User can access the previous contact relative to a particular contact.
+_YES_ 1 pt: User can access the previous contact relative to a particular contact.
 
-_____ 1 pt: User can access the next contact relative to a particular contact.
+_YES_ 1 pt: User can access the next contact relative to a particular contact.
 
 _YES_ 2 pts: App has a **robust, understandable text-based interface** that allows the user to control their activities in the app.
 
@@ -50,4 +50,4 @@ _YES_ 2 pt: Complies with style guidelines (missing items 1 pt each):
 
 _YES_ 1 pt: All required files included with submission (including completed checklist file).
 
-_____ 1 pt: `reflection.md` contains your reflection on the project and responses to all prompts .
+_____ 1 pt: `reflection.md` contains your reflection on the project and responses to all prompts.
