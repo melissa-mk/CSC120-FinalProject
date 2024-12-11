@@ -5,6 +5,7 @@ import utils.InputValidator;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class ContactBook {
@@ -34,7 +35,7 @@ public class ContactBook {
         int day=s.nextInt();
         if(iv.isDateValid(LocalDate.of(year,month,day))&&iv.isPhoneValid(phone)&& iv.isEmailValid(email)&&iv.isNameValid(firstName)&&iv.isNameValid(lastName)){
             current=new Contact(firstName,lastName,phone,email,LocalDate.of(year,month,day));
-            try (FileWriter writer = new FileWriter("contacts.txt")) {
+            try (FileWriter writer = new FileWriter("contacts.txt", true)) {
                 writer.append(current.toString());
                 System.out.println("Contact created ✅");
             } catch (IOException e) {
@@ -93,6 +94,40 @@ public class ContactBook {
             }
         } catch (IOException e) {
             System.err.println("An error occurred: " + e.getMessage());
+        }
+    }
+
+    /**
+     * updates contacts.txt with contacts sorted by last name then by first name
+     * and prints the information of all contacts, if any
+     */
+    public void viewAllSorted(){
+        ArrayList<Contact> contactList = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("contacts.txt"))) {
+            String line= reader.readLine();
+            while (line != null) {
+                String[] parts = line.split(" ");
+                if (parts.length >= 5) { // Ensure the line has all required fields
+                    String fName = parts[0];
+                    String lName = parts[1];
+                    String phone = parts[2];
+                    String email = parts[3];
+                    String[] dateParts = parts[4].split("-");
+                    LocalDate dob = LocalDate.of(
+                            Integer.parseInt(dateParts[0]),
+                            Integer.parseInt(dateParts[1]),
+                            Integer.parseInt(dateParts[2])
+                    );
+                    contactList.add(new Contact(fName, lName, phone, email, dob));
+                    line= reader.readLine();
+                }
+            }
+            Collections.sort(contactList);
+            for(Contact c:contactList){
+                System.out.println(c.toString());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -322,7 +357,7 @@ public class ContactBook {
         Scanner s= new Scanner(System.in);
         int choice;
         do {
-            System.out.println("\n------Contacts App------\nWhat do you want to do?\n1. Create a contact\n2. View all your contacts\n3. View a specific contact\n4. Edit a contact\n5. Delete a contact\n6. Delete all contacts\n7. Exit");
+            System.out.println("\n-------Contacts App-------\nWhat do you want to do?\n1. Create a contact\n2. View all your contacts sorted by last name\n3. Search your contacts\n4. Edit a contact\n5. Delete a contact\n6. Clear contact book\n7. Exit");
             choice=s.nextInt();
             if(choice!= Integer.parseInt(String.valueOf(choice))){
                 System.out.println("Invalid choice. Please try again.\n");
@@ -332,11 +367,12 @@ public class ContactBook {
                         my.createContact();
                         break;
                     case 2:
-                        System.out.println("You have " +countContacts()+" contacts.");
-                        my.viewAll();
-                        Contact c=new Contact("Melissa", "Kabalisa", "14134727947","mkabalisa@smith.edu");
-                        Contact o=new Contact("Melissa", "Keza", "250784249865","mkeza@smith.edu");
-                        System.out.println(c.compareTo(o));
+                        if(countContacts()==1){
+                            System.out.println("You have "+countContacts()+" contact.");
+                        }else{
+                            System.out.println("You have "+countContacts()+" contacts.");
+                        }
+                        my.viewAllSorted();
                         break;
                     case 3:
                         my.search();
