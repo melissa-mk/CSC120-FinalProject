@@ -90,6 +90,7 @@ public class ContactBook {
                 if (line.contains(searchParam)) {
                     found = true;
                     System.out.println("\t" + line);
+                    current=parseContactFromLine(line);
                 }
                 line=reader.readLine();
             }

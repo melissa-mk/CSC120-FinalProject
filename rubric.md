@@ -22,7 +22,7 @@ _YES_ 2 pts: App has a **robust, understandable text-based interface** that allo
 
 _YES_ 2 pts: Selected class(es) are **effective, efficient** at supporting the desired operations and program behavior.
 
-_____ 2 pts: Design justification includes a discussion of at least one (reasonable) **alternative design** that could have been used, and the reasons why you decided against this alternative.
+_YES_ 2 pts: Design justification includes a discussion of at least one (reasonable) **alternative design** that could have been used, and the reasons why you decided against this alternative.
 
 _YES_ 2 pts: The project makes effective use of **Java built-in classes** whenever they are appropriate.
 
@@ -50,4 +50,4 @@ _YES_ 2 pt: Complies with style guidelines (missing items 1 pt each):
 
 _YES_ 1 pt: All required files included with submission (including completed checklist file).
 
-_____ 1 pt: `reflection.md` contains your reflection on the project and responses to all prompts.
+_YES_ 1 pt: `reflection.md` contains your reflection on the project and responses to all prompts.
